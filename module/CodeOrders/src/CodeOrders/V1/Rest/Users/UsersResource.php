@@ -26,7 +26,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return $this->usersRepository->insert($data);
+        return $this->repository->insert($data);
     }
 
     /**
@@ -37,7 +37,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return $this->usersRepository->delete($id);
+        return $this->repository->delete($id);
     }
 
     /**
@@ -82,7 +82,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function patch($id, $data)
     {
-        return $this->usersRepository->update($id, $data);
+        return $this->repository->update($id, $data);
     }
 
     /**
@@ -105,6 +105,6 @@ class UsersResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return $this->usersRepository->update($id, $data);
+        return $this->repository->update($id, $data);
     }
 }
