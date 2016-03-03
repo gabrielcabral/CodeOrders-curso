@@ -6,6 +6,19 @@ use ZF\Rest\AbstractResourceListener;
 
 class OrdersResource extends AbstractResourceListener
 {
+
+
+    /**
+     * @var OrdersRepository
+     */
+    private $repository;
+
+    public function __construct(OrdersRepository $repository )
+    {
+
+        $this->repository = $repository;
+    }
+
     /**
      * Create a resource
      *

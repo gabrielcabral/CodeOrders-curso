@@ -26,9 +26,9 @@ class OrderItemTableGatewayFactory implements FactoryInterface
     {
         $dbAdapter = $serviceLocator->get('DbAdapter');
 
-        $hydra = new HydratingResultSet(new ClassMethods(), new OrderItemEntity());
+        $hydrator = new HydratingResultSet(new ClassMethods(), new OrderItemEntity());
 
-        $tableGateway = new TableGateway('order_item',$dbAdapter, null ,$hydra);
+        $tableGateway = new TableGateway('order_item',$dbAdapter, null ,$hydrator);
 
         return $tableGateway;
     }
