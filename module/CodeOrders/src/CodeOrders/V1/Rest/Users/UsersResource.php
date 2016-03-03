@@ -59,6 +59,12 @@ class UsersResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
+        $user = $this->repository->findByUsername($this->getIdentity()->getRoleId());
+
+        if($user->getRole() == "salesman"){
+            return new ApiProblem(403, 'The user has not access to this info!');
+        }
+
         return $this->repository->find($id);
     }
 
@@ -106,5 +112,10 @@ class UsersResource extends AbstractResourceListener
     public function update($id, $data)
     {
         return $this->repository->update($id, $data);
+    }
+
+    public function findByUsername($username)
+    {
+        return $this->tableGateway->select(['username' =>$username])->current();
     }
 }
