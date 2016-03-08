@@ -12,7 +12,10 @@ class UsersResource extends AbstractResourceListener
      */
     private $repository;
 
-    public  function __construct(UsersRepository $repository)
+    /**
+     * @param UsersRepository $repository
+     */
+    public function __construct (UsersRepository $repository)
     {
 
         $this->repository = $repository;
@@ -26,7 +29,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return $this->repository->insert($data);
+        return $this->repository->create($data);
     }
 
     /**
@@ -61,8 +64,9 @@ class UsersResource extends AbstractResourceListener
     {
         $user = $this->repository->findByUsername($this->getIdentity()->getRoleId());
 
-        if($user->getRole() == "salesman"){
-            return new ApiProblem(403, 'The user has not access to this info!');
+        if ($user->getRole() == 'salesman')
+        {
+            return new ApiProblem(403, "O usuário não tem acesso à essas informações");
         }
 
         return $this->repository->find($id);

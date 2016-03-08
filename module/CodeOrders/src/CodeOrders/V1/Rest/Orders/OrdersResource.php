@@ -1,6 +1,8 @@
 <?php
 namespace CodeOrders\V1\Rest\Orders;
 
+use Zend\Hydrator\ClassMethods;
+use Zend\Hydrator\ObjectProperty;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
@@ -12,11 +14,16 @@ class OrdersResource extends AbstractResourceListener
      * @var OrdersRepository
      */
     private $repository;
+    /**
+     * @var OrdersService
+     */
+    private $service;
 
-    public function __construct(OrdersRepository $repository )
+    public function __construct(OrdersRepository $repository , OrdersService $service )
     {
 
         $this->repository = $repository;
+        $this->service = $service;
     }
 
     /**
@@ -27,7 +34,19 @@ class OrdersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
+        $userRepository = $this->repository->getUsersRepository();
+
+        $user = $userRepository->findByUsername($this->getIdentity()->getRoleId());
+
+        if ($user->getRole() != 'salesman')
+        {
+            return new ApiProblem(403, "Desculpe, você não tem permissão para cadastrar pedidos!");
+        }
+
+        $result = $this->service->insert($data);
+        if ($result =="error"){
+            return new ApiProblem(405, 'Erro ao processar Ordem');
+        }
     }
 
     /**
@@ -38,7 +57,7 @@ class OrdersResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        return $this->service->delete($id);
     }
 
     /**
@@ -60,7 +79,16 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $userRepository = $this->repository->getUsersRepository();
+
+        $user = $userRepository->findByUsername($this->getIdentity()->getRoleId());
+
+        if ($user->getRole() == "salesman"){
+
+            return $this->repository->findByIdUsuario($id, $user->getId());
+        }
+
+        return $this->repository->find($id);
     }
 
     /**
@@ -71,7 +99,15 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $userRepository = $this->repository->getUsersRepository();
+
+        $user = $userRepository->findByUsername($this->getIdentity()->getRoleId());
+
+        if ($user->getRole() == "salesman"){
+
+            return $this->repository->findAllIdUsuario($user->getId());
+        }
+        return $this->repository->findAll();
     }
 
     /**
@@ -106,6 +142,8 @@ class OrdersResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        return $this->service->update($id, $data);
     }
+
+
 }

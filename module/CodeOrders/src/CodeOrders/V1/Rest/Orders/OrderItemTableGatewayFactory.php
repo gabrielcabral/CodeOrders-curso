@@ -9,7 +9,9 @@
 namespace CodeOrders\V1\Rest\Orders;
 
 
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Hydrator\ClassMethods;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -26,9 +28,9 @@ class OrderItemTableGatewayFactory implements FactoryInterface
     {
         $dbAdapter = $serviceLocator->get('DbAdapter');
 
-        $hydrator = new HydratingResultSet(new ClassMethods(), new OrderItemEntity());
+        $hydra = new HydratingResultSet(new ClassMethods(), new OrderItemEntity());
 
-        $tableGateway = new TableGateway('order_item',$dbAdapter, null ,$hydrator);
+        $tableGateway = new TableGateway('order_items',$dbAdapter, null ,$hydra);
 
         return $tableGateway;
     }

@@ -15,6 +15,12 @@ use \Zend\Hydrator\HydratorInterface;
 class UsersMapper extends  UsersEntity implements HydratorInterface
 {
 
+    /**
+     * Extract values from an object
+     *
+     * @param  object $object
+     * @return array
+     */
     public function extract($object)
     {
         return [
@@ -27,7 +33,13 @@ class UsersMapper extends  UsersEntity implements HydratorInterface
         ];
     }
 
-
+    /**
+     * Hydrate $object with the provided $data.
+     *
+     * @param  array $data
+     * @param  object $object
+     * @return object
+     */
     public function hydrate(array $data, $object)
     {
         $object->id = $data['id'];
@@ -38,5 +50,6 @@ class UsersMapper extends  UsersEntity implements HydratorInterface
         $object->role = $data['role'];
 
         return $object;
+
     }
 }

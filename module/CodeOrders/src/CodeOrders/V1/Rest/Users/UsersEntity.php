@@ -1,6 +1,6 @@
 <?php
 namespace CodeOrders\V1\Rest\Users;
-use Zend\Stdlib\Hydrator;
+use Zend\Hydrator;
 class UsersEntity
 {
 

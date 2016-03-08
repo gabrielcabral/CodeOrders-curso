@@ -27,8 +27,8 @@ class OrdersRepositoryFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $dbAdapter = $serviceLocator->get('DbAdapter');
-        $hydrator = new HydratingResultSet( new ClassMethods(), new OrdersEntity());
-        $tableGateway = new TableGateway('orders',$dbAdapter ,null , $hydrator);
+        $hydra= new HydratingResultSet( new ClassMethods(), new OrdersEntity());
+        $tableGateway = new TableGateway('orders',$dbAdapter ,null , $hydra);
 
         $orderItemTableGateway = $serviceLocator->get('CodeOrders\\V1\\Rest\\Orders\\OrderItemTableGateway');
         return new OrdersRepository($tableGateway, $orderItemTableGateway);

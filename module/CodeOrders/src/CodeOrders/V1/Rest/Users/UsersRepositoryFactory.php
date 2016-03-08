@@ -19,16 +19,25 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class UsersRepositoryFactory implements FactoryInterface
 {
 
-    public  function createService(ServiceLocatorInterface $serviceLocator)
+    /**
+     * Create service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return mixed
+     */
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-       $dbAdapter = $serviceLocator->get('DbAdapter');
+        $dbAdapter = $serviceLocator->get('DbAdapter');
 
-       $hydra = new HydratingResultSet(new ClassMethods(), new ProductsEntity());
+        //$usersMapper = new UsersMapper();
 
-       $tableGateway = new TableGateway('oauth_users',$dbAdapter, null , $hydra);
+        $hydrator = new HydratingResultSet(new ClassMethods(), new UsersEntity());
 
-       $usersRepository = new UsersRepository($tableGateway);
-       return $usersRepository;
+        $tableGateway = new TableGateway('oauth_users', $dbAdapter, null, $hydrator);
+
+        $usersRepository = new UsersRepository($tableGateway);
+
+        return $usersRepository;
 
     }
 
