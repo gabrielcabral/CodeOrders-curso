@@ -74,7 +74,7 @@ class UsersEntity
     }
 
     /**
-     * @param mixed $first_name
+     * @param mixed $firt_name
      * @return UsersEntity
      */
     public function setFirstName($first_name)

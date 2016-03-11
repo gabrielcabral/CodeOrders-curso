@@ -27,10 +27,15 @@ class OrdersRepositoryFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $dbAdapter = $serviceLocator->get('DbAdapter');
-        $hydra= new HydratingResultSet( new ClassMethods(), new OrdersEntity());
-        $tableGateway = new TableGateway('orders',$dbAdapter ,null , $hydra);
 
-        $orderItemTableGateway = $serviceLocator->get('CodeOrders\\V1\\Rest\\Orders\\OrderItemTableGateway');
-        return new OrdersRepository($tableGateway, $orderItemTableGateway);
+        $hydrator = new HydratingResultSet(new ClassMethods(), new OrdersEntity());
+
+        $tableGateway = new TableGateway('orders', $dbAdapter, null, $hydrator);
+
+        $ordersItemTableGateway = $serviceLocator->get('CodeOrders\\V1\\Rest\\Orders\\OrderItemTableGateway');
+        $userRepository = $serviceLocator->get('CodeOrders\\V1\\Rest\\Users\\UsersRepository');
+
+        return new OrdersRepository($tableGateway, $ordersItemTableGateway, $userRepository);
+
     }
 }

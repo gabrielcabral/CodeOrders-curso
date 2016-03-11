@@ -18,7 +18,7 @@ class OrdersService
      */
     private $repository;
 
-    public  function __construct(OrdersRepository $repository)
+    public function __construct(OrdersRepository $repository)
     {
 
         $this->repository = $repository;

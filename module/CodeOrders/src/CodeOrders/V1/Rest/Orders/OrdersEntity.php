@@ -9,7 +9,7 @@ class OrdersEntity
     protected $ptype_id;
     protected $total;
     protected $status;
-    protected $created_at;
+    protected $created_alt;
     protected $items;
 
     public function __construct()
@@ -147,18 +147,18 @@ class OrdersEntity
     /**
      * @return mixed
      */
-    public function getCreatedAt()
+    public function getCreatedAlt()
     {
-        return $this->created_at;
+        return $this->created_alt;
     }
 
     /**
-     * @param mixed $created_at
+     * @param mixed $created_alt
      * @return OrdersEntity
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAlt($created_alt)
     {
-        $this->created_at = $created_at;
+        $this->created_alt = $created_alt;
         return $this;
     }
 

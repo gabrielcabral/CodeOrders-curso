@@ -103,10 +103,11 @@ class OrdersResource extends AbstractResourceListener
 
         $user = $userRepository->findByUsername($this->getIdentity()->getRoleId());
 
-        if ($user->getRole() == "salesman"){
-
+        // o user  nao esta chegado para fazer a verifiicação do salesman
+        //nao sei o que é. me ajuda
+       /* if ($user->getRole() == "salesman"){
             return $this->repository->findAllIdUsuario($user->getId());
-        }
+        }*/
         return $this->repository->findAll();
     }
 
